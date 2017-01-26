@@ -6,14 +6,16 @@ node('win_slave') {
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
-      mvnHome = tool 'apache-maven-3.0.4-nc'
+      mvnHome = tool 'apache-maven-3.0.4-nc-win'
    }
    stage('Build') {
       // Run the maven build
       if (isUnix()) {
          sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean install pmd:pmd"
       } else {
-         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean install pmd:pmd checkstyle:checkstyle/)
+        withEnv(["JAVA_HOME=${ tool 'jdk1.8.0_112_win' }", "PATH+MAVEN=${tool 'apache-maven-3.0.4-nc-win'}/bin:${env.JAVA_HOME}/bin"]) {
+            bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean install pmd:pmd checkstyle:checkstyle/)
+        }
       }
    }
    stage('Results') {
