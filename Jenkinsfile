@@ -1,4 +1,4 @@
-node {
+node('win_slave') {
    def mvnHome
    stage('Preparation') { // for display purposes
       // Get some code from a GitHub repository
@@ -25,5 +25,8 @@ node {
         "CheckStyle" : { step([$class: 'hudson.plugins.checkstyle.CheckStylePublisher', checkstyle: '**/target/checkstyle-result.xml'])  },
         "PMD" : { step([$class: 'hudson.plugins.pmd.PmdPublisher', checkstyle: '**/target/pmd.xml']) }
       )
+   }
+   stage('AI') {
+        step([$class: 'com.netcracker.om.tls.jenkins.AIPlugin', $isPsswd: [[value: 'true', serverPassword: 'crknet']], serverHost: 'devapp056', serverPort: '22', serverLogin: 'netcrk', serverRootDir: '/'])
    }
 }
