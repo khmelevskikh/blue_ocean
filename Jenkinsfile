@@ -29,6 +29,6 @@ node('win_slave') {
       )
    }
    stage('AI') {
-        step([$class: 'com.netcracker.om.tls.jenkins.AIPlugin', $isPsswd: [[value: 'true', serverPassword: 'crknet']], serverHost: 'devapp056', serverPort: '22', serverLogin: 'netcrk', serverRootDir: '/'])
+        //step([$class: 'com.netcracker.om.tls.jenkins.AIPlugin', $isPsswd: [[value: 'true', serverPassword: 'crknet']], serverHost: 'devapp056', serverPort: '22', serverLogin: 'netcrk', serverRootDir: '/'])
    }
 }
